@@ -1,12 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medicine_tracker/screens/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+  await Firebase.initializeApp();
   runApp(
     MaterialApp(
       theme: ThemeData(
-        primarySwatch: const MaterialColor(0xFFFF7461, <int, Color>{
+          primarySwatch: const MaterialColor(
+            0xFFFF7461,
+            <int, Color>{
               50: Color(0xFFFF7461),
               100: Color(0xFFFF7461),
               200: Color(0xFFFF7461),
@@ -19,8 +24,8 @@ void main() {
               900: Color(0xFFFF7461),
             },
           ),
-        textTheme: TextTheme(
-          headline1: GoogleFonts.poppins(
+          textTheme: TextTheme(
+            headline1: GoogleFonts.poppins(
                 fontSize: 97, fontWeight: FontWeight.w300, letterSpacing: -1.5),
             headline2: GoogleFonts.poppins(
                 fontSize: 61, fontWeight: FontWeight.w300, letterSpacing: -0.5),
@@ -46,8 +51,7 @@ void main() {
                 fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
             overline: GoogleFonts.poppins(
                 fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
-        )
-      ),
+          )),
       home: const HomePage(),
     ),
   );

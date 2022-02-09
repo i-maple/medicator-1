@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "32688178138",
+    "project_id": "medicine-tracker-84601",
+    "storage_bucket": "medicine-tracker-84601.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32688178138:android:009370e6938c461368f6e3",
+        "android_client_info": {
+          "package_name": "com.nishantp.medicine_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32688178138-8md9f8pbnt3tc5qhi02s21r4rf410umm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0oP41TwmTw3Snx5Eg_IpeaiWldJqr9bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32688178138-8md9f8pbnt3tc5qhi02s21r4rf410umm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

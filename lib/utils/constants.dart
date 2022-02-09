@@ -9,3 +9,9 @@ const kPrimaryTitle =
 
 const kComplicationTextStyle =
     TextStyle(color: kPrimaryColor, fontSize: 20, fontWeight: FontWeight.w700);
+
+showSnackBar(String message) {
+  ScaffoldMessenger(
+    child: SnackBar(content: Text(message),),
+  );
+}

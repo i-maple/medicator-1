@@ -1,10 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/components/navbar.dart';
 import 'package:medicine_tracker/components/reusable_container.dart';
 import 'package:medicine_tracker/utils/constants.dart';
 
-class ComplicationDetails extends StatelessWidget {
-  const ComplicationDetails({Key? key}) : super(key: key);
+class ComplicationDetails extends StatefulWidget {
+  final listId;
+  const ComplicationDetails({Key? key, required this.listId}) : super(key: key);
+
+  @override
+  State<ComplicationDetails> createState() => _ComplicationDetailsState();
+}
+
+String complication = 'Complication...';
+String doctor = 'doctor...';
+String date = 'date...';
+String description = 'Description...';
+String imageUrl = 'Image';
+
+class _ComplicationDetailsState extends State<ComplicationDetails> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<void> getData() async {
+    DocumentSnapshot snapshot =
+        await _firestore.collection('medication').doc(widget.listId).get();
+    setState(() {
+      complication = snapshot.get('complication');
+      doctor = snapshot.get('doctor');
+      date = snapshot.get('date');
+      description = snapshot.get('description');
+      imageUrl = snapshot.get('imageUrl');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,32 +56,32 @@ class ComplicationDetails extends StatelessWidget {
                       vertical: 28.0, horizontal: 15.0),
                   child: Column(
                     children: [
-                      const ListTile(
+                      ListTile(
                         title: Text(
-                          'Typhoid',
+                          complication,
                           style: kComplicationTextStyle,
                         ),
-                        subtitle: Text('Dr. Anand Mehra'),
-                        trailing: Text('2078-10-19'),
+                        subtitle: Text(doctor),
+                        trailing: Text(date),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       Image.network(
-                        'https://cdn5.vectorstock.com/i/1000x1000/81/64/any-questions-vector-7478164.jpg', height: 300,
+                        imageUrl,
+                        height: 300,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const  Text(
-                          'Description',
-                          style: kComplicationTextStyle,
-                        ),
                       const SizedBox(
                         height: 20,
                       ),
                       const Text(
-                          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.')
+                        'Description',
+                        style: kComplicationTextStyle,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(description)
                     ],
                   ),
                 ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/components/navbar.dart';
 import 'package:medicine_tracker/components/reusable_container.dart';
+import 'package:medicine_tracker/methods/auth_methods.dart';
 import 'package:medicine_tracker/screens/add_screen.dart';
-import 'package:medicine_tracker/screens/complication_details.dart';
+import 'package:medicine_tracker/screens/login_screen.dart';
 import 'package:medicine_tracker/utils/constants.dart';
 
 import '../components/list_tile.dart';
@@ -16,71 +17,76 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (AuthMethods().checkLoggedIn) {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (_) => const AddScreen(),
               ),
             );
-          },
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => LoginScreen(),
+              ),
+            );
+          }
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              const Navbar(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'Track Your Medicine with',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-              ),
-              const Text(
-                'Medicator Prime',
-                style: kPrimaryTitle,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: ReusableContainer(
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            const Navbar(),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              'Track Your Medicine with',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+            ),
+            const Text(
+              'Medicator Prime',
+              style: kPrimaryTitle,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: ReusableContainer(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 28.0, horizontal: 15.0),
                   child: ListView(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 28.0, horizontal: 15.0),
                     children: [
                       ReusableInput(
                         onChanged: (value) {},
                         hint: 'Enter Complication',
+                        controller: _searchController,
                       ),
                       const SizedBox(
                         height: 24,
                       ),
-                      ListItem(
-                        onPress: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ComplicationDetails(),
-                            ),
-                          );
-                        },
-                      ),
+                      const ListItem(),
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
-        ),);
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
