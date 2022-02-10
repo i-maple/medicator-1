@@ -15,6 +15,7 @@ class FirestoreMethods {
       await _firestore.collection('medication').add({
         'doctor': doctorName,
         'complication': complication,
+        'complicationForSearch' : complication.toLowerCase(),
         'date': date,
         'addedBy' : addedBy,
         'description': description,

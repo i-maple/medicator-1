@@ -18,6 +18,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
+  String searchValue = '';
+  bool searchState = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,14 +73,27 @@ class _HomePageState extends State<HomePage> {
                   child: ListView(
                     children: [
                       ReusableInput(
-                        onChanged: (value) {},
-                        hint: 'Enter Complication',
+                        onChanged: (value) {
+                          setState(() {
+                            searchValue = value;
+                            if (searchValue != null) {
+                              searchState = true;
+                            }
+                            if (searchValue == '') {
+                              searchState = false;
+                            }
+                          });
+                        },
                         controller: _searchController,
+                        hint: 'Enter Complication',
                       ),
                       const SizedBox(
                         height: 24,
                       ),
-                      const ListItem(),
+                      ListItem(
+                        searchText: _searchController.text,
+                        searchState: searchState,
+                      )
                     ],
                   ),
                 ),

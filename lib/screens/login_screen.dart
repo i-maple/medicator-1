@@ -4,12 +4,14 @@ import 'package:medicine_tracker/components/reusable_button.dart';
 import 'package:medicine_tracker/components/reusable_container.dart';
 import 'package:medicine_tracker/components/reusable_input.dart';
 import 'package:medicine_tracker/methods/auth_methods.dart';
+import 'package:medicine_tracker/providers/auth_providers.dart';
 import 'package:medicine_tracker/screens/home_page.dart';
 import 'package:medicine_tracker/screens/register_screen.dart';
 import 'package:medicine_tracker/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -23,17 +25,16 @@ class _LoginScreenState extends State<LoginScreen> {
   String res = '';
 
   bool isLoading = false;
+
   loginUser() async {
-    setState(() {
-      isLoading = true;
-    });
+  final _authProvider = Provider.of<AuthProviders>(context, listen: false);
+    isLoading = Provider.of<AuthProviders>(context, listen: false).changeLoading();
     try {
       String res = await AuthMethods().loginUser(
           email: _usernameController.text, password: _passwordController.text);
       if (res == 'success') {
-        setState(() {
-          isLoading = false;
-        });
+        _authProvider.getLoggedIn();
+        isLoading = _authProvider.changeLoading();
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const HomePage()));
       }

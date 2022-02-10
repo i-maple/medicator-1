@@ -10,7 +10,10 @@ import 'package:medicine_tracker/models/data_model.dart';
 import 'package:medicine_tracker/screens/home_page.dart';
 import 'package:medicine_tracker/screens/login_screen.dart';
 import 'package:medicine_tracker/utils/constants.dart';
+import 'package:provider/provider.dart';
 import 'dart:io' as io;
+
+import '../providers/auth_providers.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -41,9 +44,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         path: _image!.path);
 
     if (res == 'success') {
-      setState(() {
-        isLoading = false;
-      });
+      Provider.of<AuthProviders>(context).getLoggedIn();
+
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const HomePage()));
     } else {
